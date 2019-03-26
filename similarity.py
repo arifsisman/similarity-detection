@@ -27,7 +27,9 @@ def main():
         "hello",
         "hello world!")
     y = get_cosine_sim("hello",
-                       "hello world!")
+                       "hello world!"
+			"asdhello"
+)
 
     print("jaccard similarity is", x)
     print("cosine similarity is", y)
