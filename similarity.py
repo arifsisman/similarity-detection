@@ -27,6 +27,13 @@ def get_vectors(*strs):
 # Jaccard helper
 
 # Cosine helper
+def cosine_helper(datas, index):
+    arr_len = len(datas)
+    for i in range(arr_len - 1):
+        for j in range(arr_len-1):
+            print(datas[i])
+            print(datas[j])
+            print("\n\ncosine ID:", i*j, "\n", cosine_similarity(get_vectors(datas[i], datas[j])))
 
 
 # Program extracting first column
@@ -39,22 +46,17 @@ def get_data():
     sheet.cell_value(0, 0)
 
     for i in range(sheet.nrows):
-        str = sheet.cell_value(i, 1)
-        data.append(str)
-    # texts = [[word.lower() for word in text.split()] for text in data]
+        data.append(sheet.cell_value(i, 1))
     return data
 
 
 def main():
     # x = get_jaccard("hello","hello world!")
-    # y = get_cosine_sim("hello","hello world!","asdhello")
+    # y = get_cosine_sim("hello","hello world!")
     # print("jaccard similarity is", x)
     # print("cosine similarity is\n", y)
 
-    data = get_data()
-    z = get_cosine_sim("Apple", "Banana", "Cherry", "Apple")
-
-    print("cosine similarity of the data's", z)
+    cosine_helper(get_data(), 0)
 
 
 if __name__ == '__main__':
