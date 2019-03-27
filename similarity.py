@@ -24,30 +24,48 @@ def get_vectors(*strs):
     return vectorizer.transform(text).toarray()
 
 
-# Jaccard helper
-
-# Cosine helper
-def cosine_helper(datas):
+# Jaccard helper needs data and print option
+def jaccard_helper(datas, print):
     arr_len = len(datas)
     ctr = 0
-    result = [[]]
-    for i in range(arr_len):
-        for j in range(arr_len):
-            if i != j & i <= j:
-                sparse = cosine_similarity(get_vectors(datas[i], datas[j]))
-                result.append((i, j, sparse[1][0]))
-                print("\n\ncosine ID:", ctr, "\n")
-                print("i =", i, datas[i])
-                print("j =", j, datas[j])
-                print(sparse[1][0])
+    result = [[0] * 3 for element in range(arr_len)]
+    for i in range(0, arr_len):
+        for j in range(i, arr_len):
+            if i != j:
+                ratio = get_jaccard(datas[i], datas[j])
+                result.insert(ctr, (i, j, ratio))
+                if print:
+                    print("\n\njaccard ID:", ctr)
+                    print("i =", i, datas[i])
+                    print("j =", j, datas[j])
+                    print(ratio)
                 ctr += 1
     return result
 
 
-# Program extracting first column
+# Cosine helper needs data and print option
+def cosine_helper(datas, print):
+    arr_len = len(datas)
+    ctr = 0
+    result = [[0] * 3 for element in range(arr_len)]
+    for i in range(0, arr_len):
+        for j in range(i, arr_len):
+            if i != j:
+                sparse = cosine_similarity(get_vectors(datas[i], datas[j]))
+                result.insert(ctr, (i, j, sparse[1][0]))
+                if print:
+                    print("\n\ncosine ID:", ctr)
+                    print("i =", i, datas[i])
+                    print("j =", j, datas[j])
+                    print(sparse[1][0])
+                ctr += 1
+    return result
+
+
+# Program extracting data from excel file
 def get_data():
     data = []
-    loc = "hwdata1.xls"
+    loc = "hwdata2.xls"
 
     wb = xlrd.open_workbook(loc)
     sheet = wb.sheet_by_index(0)
@@ -58,13 +76,22 @@ def get_data():
     return data
 
 
-def main():
-    # x = get_jaccard("hello","hello world!")
-    # y = get_cosine_sim("hello","hello world!")
-    # print("jaccard similarity is", x)
-    # print("cosine similarity is\n", y)
+def filter_data(data):
+    return filter(None, data)
 
-    cosine_helper(get_data())
+
+def sort_data(data):
+    return sorted(data, key=lambda tup: float(tup[2]), reverse=True)
+
+
+def main():
+    data = cosine_helper(get_data(), 0)
+    # filter_data(data)
+    data = sort_data(data)
+    print(data)
+
+    # print(cosine_helper(get_data(), 0))
+    # print(jaccard_helper(get_data(), 0))
 
 
 if __name__ == '__main__':
