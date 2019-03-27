@@ -33,7 +33,7 @@ def cosine_helper(datas):
     result = [[]]
     for i in range(arr_len):
         for j in range(arr_len):
-            if i != j & i<=j:
+            if i != j & i <= j:
                 sparse = cosine_similarity(get_vectors(datas[i], datas[j]))
                 result.append((i, j, sparse[1][0]))
                 print("\n\ncosine ID:", ctr, "\n")
@@ -42,6 +42,7 @@ def cosine_helper(datas):
                 print(sparse[1][0])
                 ctr += 1
     return result
+
 
 # Program extracting first column
 def get_data():
