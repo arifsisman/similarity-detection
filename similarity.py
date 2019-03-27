@@ -27,14 +27,21 @@ def get_vectors(*strs):
 # Jaccard helper
 
 # Cosine helper
-def cosine_helper(datas, index):
+def cosine_helper(datas):
     arr_len = len(datas)
-    for i in range(arr_len - 1):
-        for j in range(arr_len-1):
-            print(datas[i])
-            print(datas[j])
-            print("\n\ncosine ID:", i*j, "\n", cosine_similarity(get_vectors(datas[i], datas[j])))
-
+    ctr = 0
+    result = [[]]
+    for i in range(arr_len):
+        for j in range(arr_len):
+            if i != j & i<=j:
+                sparse = cosine_similarity(get_vectors(datas[i], datas[j]))
+                result.append((i, j, sparse[1][0]))
+                print("\n\ncosine ID:", ctr, "\n")
+                print("i =", i, datas[i])
+                print("j =", j, datas[j])
+                print(sparse[1][0])
+                ctr += 1
+    return result
 
 # Program extracting first column
 def get_data():
@@ -56,7 +63,7 @@ def main():
     # print("jaccard similarity is", x)
     # print("cosine similarity is\n", y)
 
-    cosine_helper(get_data(), 0)
+    cosine_helper(get_data())
 
 
 if __name__ == '__main__':
