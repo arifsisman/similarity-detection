@@ -1,4 +1,5 @@
 import xlrd
+import numpy as np
 
 from collections import Counter
 from sklearn.feature_extraction.text import CountVectorizer
@@ -52,6 +53,7 @@ def cosine_helper(datas, print):
         for j in range(i, arr_len):
             if i != j:
                 sparse = cosine_similarity(get_vectors(datas[i], datas[j]))
+                # if np.greater(sparse[1][0], .5):
                 result.insert(ctr, (i, j, sparse[1][0]))
                 if print:
                     print("\n\ncosine ID:", ctr)
@@ -76,19 +78,26 @@ def get_data():
     return data
 
 
-def filter_data(data):
-    return filter(None, data)
+def filter_data(data, threshold):
+    # np.greater(sparse[1][0], .5):
+    return [item for item in data if np.greater(item[2], threshold)]
 
 
 def sort_data(data):
-    return sorted(data, key=lambda tup: float(tup[2]), reverse=True)
+    return sorted(data, key=lambda tup: float(tup[2]), reverse=False)
+
+
+def print_data(data):
+    for i in range(len(data)):
+            print(data[i])
 
 
 def main():
     data = cosine_helper(get_data(), 0)
-    # filter_data(data)
+    data = filter_data(data, .25)
     data = sort_data(data)
-    print(data)
+
+    print_data(data)
 
     # print(cosine_helper(get_data(), 0))
     # print(jaccard_helper(get_data(), 0))
