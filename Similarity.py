@@ -8,7 +8,7 @@ def main():
     parser = ArgumentParser()
     parser.add_argument("-t", "--type", dest="type", default='cosine',
                         help="cosine or jaccard", metavar="TYPE")
-    parser.add_argument("-f", "--file", dest="filename", default='hwdata1.xls',
+    parser.add_argument("-f", "--file", dest="filename", default='data/hwdata1.xls',
                         help="input excel file", metavar="FILE")
     parser.add_argument("-th", "--threshold", dest="threshold", default=.25,
                         help="threshold value for similarity", metavar="THRESHOLD")
@@ -17,24 +17,24 @@ def main():
 
     # parse args
     args = parser.parse_args()
-    type = args.type
+    sim_type = args.type
     file_path = args.filename
     threshold = float(args.threshold)
-    printf = args.printf
+    print_id = args.printf
 
     # run program with args
-    if type == 'cosine':
-        data = cosine_helper(get_data(file_path), printf)
-    elif type == 'jaccard':
-        data = jaccard_helper(get_data(file_path), printf)
+    if sim_type == 'cosine':
+        my_data = cosine_helper(get_data(file_path), print_id)
+    elif sim_type == 'jaccard':
+        my_data = jaccard_helper(get_data(file_path), print_id)
     else:
-        type = "cosine"  # default
-        data = cosine_helper(get_data(file_path), printf)
+        sim_type = "cosine"  # default
+        my_data = cosine_helper(get_data(file_path), print_id)
 
     # data post-processing
-    data = filter_data(data, threshold)
-    data = sort_data(data)
-    print_data(data)
+    my_data = filter_data(my_data, threshold)
+    my_data = sort_data(my_data)
+    print_data(my_data)
 
     # print args for inform
     print(args)

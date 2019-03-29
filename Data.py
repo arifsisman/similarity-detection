@@ -26,5 +26,4 @@ def sort_data(data):
 
 def print_data(data):
     for i in range(len(data)):
-        print('Student ID 1 = {0:2d} Student ID 2 = {0:2d} Similarity = {sim}'.format(data[i][0], data[i][1], sim=data[i][2]))
-        # print('Student ID 1 =', data[i][0], 'Student ID 2 =', data[i][1], 'Similarity =', data[i][2])
+        print('Student ID 1 =', data[i][0], 'Student ID 2 =', data[i][1], 'Similarity =', data[i][2])

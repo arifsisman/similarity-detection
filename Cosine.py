@@ -23,12 +23,12 @@ def cosine_helper(datas, printf):
     for i in range(0, arr_len):
         for j in range(i, arr_len):
             if i != j:
-                sparse = cosine_similarity(get_vectors(datas[i], datas[j]))
-                result.insert(ctr, (i, j, sparse[1][0]))
+                sim = cosine_similarity(get_vectors(datas[i], datas[j]))
+                result.insert(ctr, (i, j, sim[1][0]))
                 if printf == '1':
                     print("\n\ncosine ID:", ctr)
                     print("i =", i, datas[i])
                     print("j =", j, datas[j])
-                    print(sparse[1][0])
+                    print(sim[1][0])
                 ctr += 1
     return result
